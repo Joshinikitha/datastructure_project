@@ -1,0 +1,221 @@
+ #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_ITEMS 100
+
+// Structure to represent a material
+typedef struct {
+    int id;
+    char name[50];
+    int quantity;
+} Material;
+
+// Structure to represent an equipment
+typedef struct {
+    int id;
+    char name[50];
+    int available;
+} Equipment;
+
+// Global arrays to store materials and equipment
+Material materials[MAX_ITEMS];
+Equipment equipments[MAX_ITEMS];
+int materialCount = 0;
+int equipmentCount = 0;void addMaterial();
+        printf("\nConstruction Management System\n");
+        printf("1. Add Material\n");
+        printf("2. Delete Material\n");
+        printf("3. Search Material\n");
+        printf("4. Display Material\n");
+        printf("5. Add Equipment\n");
+        printf("6. Delete Equipment\n");
+        printf("7. Search Equipment\n");
+        printf("8. Display Equipment\n");
+        printf("9. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                addMaterial();
+                break;
+            case 2:
+                if (materialCount > 0) {
+                    int id;
+                    printf("Enter material ID to delete: ");
+                    scanf("%d", &id);
+                    deleteMaterial(id);
+                } else {
+                    printf("No materials to delete.\n");
+                }
+                break;
+            case 3:
+                if (materialCount > 0) {
+                    int id;
+                    printf("Enter material ID to search: ");
+                    scanf("%d", &id);
+                    searchMaterial(id);
+                } else {
+                    printf("No materials to search.\n");
+                }
+                break;case 4:
+                if (materialCount > 0) {
+                    int id;
+                    printf("Enter material ID to display: ");
+                    scanf("%d", &id);
+                    displayMaterial(id);
+                } else {
+                    printf("No materials to display.\n");
+                }
+                break;
+            case 5:
+                addEquipment();
+                break;
+            case 6:
+                if (equipmentCount > 0) {
+                    int id;
+                    printf("Enter equipment ID to delete: ");
+                    scanf("%d", &id);
+                    deleteEquipment(id);
+                } else {
+                    printf("No equipment to delete.\n");
+                }
+                break;
+            case 7:
+                if (equipmentCount > 0) {
+                    int id;
+                    printf("Enter equipment ID to search: ");
+                    scanf("%d", &id);
+                    searchEquipment(id);
+                } else {
+                    printf("No equipment to search.\n");
+                }
+                break;
+            case 8:
+                if (equipmentCount > 0) {
+                    int id;
+                    printf("Enter equipment ID to display: ");
+                    scanf("%d", &id);
+                    displayEquipment(id);
+                } else {
+                    printf("No equipment to display.\n");
+                }
+                break;
+            case 9:
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }while (choice != 9);
+        printf("Enter material ID: ");
+        scanf("%d", &materials[materialCount].id);
+        printf("Enter material name: ");
+        scanf("%s", materials[materialCount].name);
+        printf("Enter quantity: ");
+        scanf("%d", &materials[materialCount].quantity);
+        materialCount++;
+        printf("Material added successfully.\n");
+    } else {
+        printf("Cannot add more materials. Limit reached.\n");
+    }
+}
+
+// Function to delete a material based on ID
+void deleteMaterial(int id) {
+    int found = 0;
+    for (int i = 0; i < materialCount; i++) {
+        if (materials[i].id == id) {
+            found = 1;
+            for (int j = i; j < materialCount - 1; j++) {
+                materials[j] = materials[j + 1];
+            }
+            materialCount--;
+            printf("Material with ID %d deleted successfully.\n", id);
+            break;
+        }
+    }
+    if (!found) {
+        printf("Material with ID %d not found.\n", id);
+    }
+}void searchMaterial(int id) {
+// Function to display a material based on ID
+void displayMaterial(int id) {
+    int found = 0;
+    for (int i = 0; i < materialCount; i++) {
+        if (materials[i].id == id) {
+            found = 1;
+            printf("Material details:\n");
+            printf("ID: %d\nName: %s\nQuantity: %d\n", materials[i].id, materials[i].name, materials[i].quantity);
+            break;
+        }
+    }
+    if (!found) {
+        printf("Material with ID %d not found.\n", id);
+    }
+}
+
+// Function to add an equipment
+void addEquipment() {
+    if (equipmentCount < MAX_ITEMS) {
+        printf("Enter equipment ID: ");
+        scanf("%d", &equipments[equipmentCount].id);
+        printf("Enter equipment name: ");
+        scanf("%s", equipments[equipmentCount].name);
+        printf("Enter availability (1 for available, 0 for not available): ");
+        scanf("%d", &equipments[equipmentCount].available);
+        equipmentCount++;
+        printf("Equipment added successfully.\n");
+    } else {
+        printf("Cannot add more equipment. Limit reached.\n");
+    }
+}void deleteEquipment(int id) {
+    int found = 0;
+    for (int i = 0; i < equipmentCount; i++) {
+        if (equipments[i].id == id) {
+            found = 1;
+            for (int j = i; j < equipmentCount - 1; j++) {
+                equipments[j] = equipments[j + 1];
+            }
+            equipmentCount--;
+            printf("Equipment with ID %d deleted successfully.\n", id);
+            break;
+        }
+    }
+    if (!found) {
+        printf("Equipment with ID %d not found.\n", id);
+    }
+}
+
+// Function to search for an equipment based on ID
+void searchEquipment(int id) {
+    int found = 0;
+    for (int i = 0; i < equipmentCount; i++) {
+        if (equipments[i].id == id) {
+            found = 1;
+            printf("Equipment found:\n");
+            printf("ID: %d\nName: %s\nAvailability: %s\n", equipments[i].id, equipments[i].name, equipments[i].available ? "Available" : "Not Available");
+            break;
+        }
+    }
+    if (!found) {
+        printf("Equipment with ID %d not found.\n", id);
+    }
+}
+
+// Function to display an equipment based on ID
+void displayEquipment(int id) {
+    int found = 0;
+    for (int i = 0; i < equipmentCount; i++) {
+        if (equipments[i].id == id) {
+            found = 1;
+            printf("Equipment details:\n");
+            printf("ID: %d\nName: %s\nAvailability: %s\n", equipments[i].id, equipments[i].name, equipments[i].available ? "Available" : "Not Available");
+            break;
+        }
+    }
+    if (!found) {
+        printf("Equipment with ID %d not found.\n", id);
+    }
+}
